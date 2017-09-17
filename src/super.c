@@ -5,7 +5,9 @@
 
 #ifdef OPENCV
 #include "opencv2/highgui/highgui_c.h"
+#if CV_MAJOR_VERSION == 3
 #include <opencv2/videoio/videoio_c.h>
+#endif
 #endif
 
 void train_super(char *cfgfile, char *weightfile, int clear)

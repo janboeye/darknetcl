@@ -6,7 +6,9 @@
 
 #ifdef OPENCV
 #include "opencv2/highgui/highgui_c.h"
+#if CV_MAJOR_VERSION == 3
 #include <opencv2/videoio/videoio_c.h>
+#endif
 image get_image_from_stream(CvCapture *cap);
 image ipl_to_image(IplImage* src);
 

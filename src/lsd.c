@@ -7,7 +7,9 @@
 
 #ifdef OPENCV
 #include "opencv2/highgui/highgui_c.h"
+#if CV_MAJOR_VERSION == 3
 #include <opencv2/videoio/videoio_c.h>
+#endif
 #endif
 
 void train_lsd3(char *fcfg, char *fweight, char *gcfg, char *gweight, char *acfg, char *aweight, int clear)

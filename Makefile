@@ -13,11 +13,11 @@
 #
 # 
 
-GPU=0
-OPENCL=0
+GPU=1
+OPENCL=1
 CUDA=0
 CUDNN=0
-OPENCV=0
+OPENCV=1
 DEBUG=0
 CUDA_MEM_DEBUG=0
 GPU_UNIT=0
@@ -58,7 +58,7 @@ endif
 OPTS=-Ofast
 LDFLAGS= -lm -pthread 
 COMMON= 
-CFLAGS=-Wall -Wfatal-errors -Wno-unused-result
+CFLAGS=-Wall -Wfatal-errors -Wno-unused-result -std=c99 -D_BSD_SOURCE
 
 ifeq ($(DEBUG), 1) 
 OPTS=-O0 -g
@@ -92,8 +92,8 @@ ifeq ($(OPENCL), 1)
 COMMON+= -DGPU -DOPENCL
 CFLAGS+= -DGPU -DOPENCL
 LDFLAGS+= -L/usr/lib/x86_64-linux-gnu
-LDFLAGS+= -L/opt/amdgpu-pro/lib/x86_64-linux-gnu
-LDFLAGS+= $(shell pkg-config --libs OpenCL)
+#LDFLAGS+= -L/opt/amdgpu-pro/lib/x86_64-linux-gnu
+LDFLAGS+= -lOpenCL
 LDFLAGS+= $(shell pkg-config --libs clBLAS)
 endif
 

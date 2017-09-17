@@ -10,7 +10,9 @@
 
 #ifdef OPENCV
 #include "opencv2/highgui/highgui_c.h"
+#if CV_MAJOR_VERSION == 3
 #include <opencv2/videoio/videoio_c.h>
+#endif
 #endif
 
 extern void predict_classifier(char *datacfg, char *cfgfile, char *weightfile, char *filename, int top);

@@ -181,10 +181,11 @@ void gemm_ongpu(int TA, int TB, int M, int N, int K, float ALPHA,
 
 #ifdef OPENCL
 
-#include <clBLAS.h>
+#include <clblast_c.h>
 
 void gemm_kernel_init(void)
 {
+/*
     cl_int clErr;
     clErr = clblasSetup();
 
@@ -192,11 +193,14 @@ void gemm_kernel_init(void)
     {
         printf("gemm_kernel_init: Could not setup clBLAS. Errorcode: %d\n", clErr);
     }
+*/
 }
 
 void gemm_kernel_release(void)
 {
+/*
     clblasTeardown();
+*/
 }
 
 void gemm_ongpu(int TA, int TB, int M, int N, int K, float ALPHA, 
@@ -207,15 +211,15 @@ void gemm_ongpu(int TA, int TB, int M, int N, int K, float ALPHA,
 {
     cl_int clErr;
 
-    clErr = clblasSgemm(clblasRowMajor,
-        (TB ? clblasTrans : clblasNoTrans),
-        (TA ? clblasTrans : clblasNoTrans),
+    clErr = CLBlastSgemm(CLBlastLayoutRowMajor,
+        (TB ? CLBlastTransposeYes : CLBlastTransposeNo),
+        (TA ? CLBlastTransposeYes : CLBlastTransposeNo),
         M, N, K, ALPHA,
         A_gpu, offset_A, lda,
         B_gpu, offset_B, ldb,
         BETA,
         C_gpu, offset_C, ldc,
-        1, &opencl_queue, 0, NULL, NULL);
+        &opencl_queue, NULL);
 
     if (clErr != CL_SUCCESS)
     {

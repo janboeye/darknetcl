@@ -29,6 +29,7 @@ include $(CLEAR_VARS)
 LOCAL_C_INCLUDES :=  \
 	$(OPENCL_HEADER_PATH) \
 	$(LOCAL_PATH)/include \
+	$(LOCAL_PATH)/../CLBlast/include \
 	$(LOCAL_PATH)/src
 
 LOCAL_CFLAGS := \
@@ -111,9 +112,10 @@ LOCAL_SRC_FILES :=  \
 
 
 LOCAL_SHARED_LIBRARIES :=  \
-	libOpenCL
+	libOpenCL \
+	libclblast
 
-LOCAL_MODULE := libclbast
+LOCAL_MODULE := darknetcl
 
 LOCAL_MODULE_TAGS := eng optional tests
 

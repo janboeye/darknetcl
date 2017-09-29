@@ -1046,10 +1046,6 @@ void load_convolutional_weights(layer l, FILE *fp)
         }
     }
     fread(l.weights, sizeof(float), num, fp);
-    if(l.adam){
-        fread(l.m, sizeof(float), num, fp);
-        fread(l.v, sizeof(float), num, fp);
-    }
     //if(l.c == 3) scal_cpu(num, 1./256, l.weights, 1);
     if (l.flipped) {
         transpose_matrix(l.weights, l.c*l.size*l.size, l.n);
@@ -1081,7 +1077,13 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
     fread(&major, sizeof(int), 1, fp);
     fread(&minor, sizeof(int), 1, fp);
     fread(&revision, sizeof(int), 1, fp);
-    fread(net->seen, sizeof(int), 1, fp);
+    if ((major*10 + minor) >= 2){
+        fread(net->seen, sizeof(size_t), 1, fp);
+    } else {
+        int iseen = 0;
+        fread(&iseen, sizeof(int), 1, fp);
+        *net->seen = iseen;
+    }
     int transpose = (major > 1000) || (minor > 1000);
     
     printf("mj = %d, mn = %d, *(net->seen) = %d\n", major, minor, net->seen ? *(net->seen) : 0);

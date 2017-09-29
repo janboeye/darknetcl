@@ -57,9 +57,9 @@ network load_network(char *cfg, char *weights, int clear)
     return net;
 }
 
-int get_current_batch(network net)
+size_t get_current_batch(network net)
 {
-    int batch_num = (*net.seen)/(net.batch*net.subdivisions);
+    size_t batch_num = (*net.seen)/(net.batch*net.subdivisions);
     return batch_num;
 }
 
@@ -76,7 +76,7 @@ void reset_momentum(network net)
 
 float get_current_rate(network net)
 {
-    int batch_num = get_current_batch(net);
+    size_t batch_num = get_current_batch(net);
     int i;
     float rate;
     if (batch_num < net.burn_in) return net.learning_rate * pow((float)batch_num / net.burn_in, net.power);

@@ -27,7 +27,7 @@ typedef struct network{
 #endif
     int n;
     int batch;
-    int *seen;
+    size_t *seen;
     float epoch;
     int subdivisions;
     float momentum;
@@ -118,7 +118,7 @@ void harmless_update_network_gpu(network net);
 #endif
 
 float get_current_rate(network net);
-int get_current_batch(network net);
+size_t get_current_batch(network net);
 void free_network(network net);
 void compare_networks(network n1, network n2, data d);
 char *get_layer_string(LAYER_TYPE a);

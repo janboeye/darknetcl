@@ -58,7 +58,7 @@ endif
 OPTS=-Ofast
 LDFLAGS= -lm -pthread 
 COMMON= 
-CFLAGS=-Wall -Wfatal-errors -Wno-unused-result -std=c99 -D_BSD_SOURCE
+CFLAGS=-Wall -Wfatal-errors -Wno-unused-result -std=c99 -D_BSD_SOURCE -DCV_MAJOR_VERSION=3
 
 ifeq ($(DEBUG), 1) 
 OPTS=-O0 -g
@@ -94,7 +94,7 @@ CFLAGS+= -DGPU -DOPENCL
 LDFLAGS+= -L/usr/lib/x86_64-linux-gnu
 #LDFLAGS+= -L/opt/amdgpu-pro/lib/x86_64-linux-gnu
 LDFLAGS+= -lOpenCL
-LDFLAGS+= $(shell pkg-config --libs clBLAS)
+LDFLAGS+= -lclBLAS
 endif
 
 endif

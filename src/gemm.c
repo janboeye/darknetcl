@@ -210,7 +210,8 @@ void gemm_ongpu(int TA, int TB, int M, int N, int K, float ALPHA,
         GPU_DATA C_gpu, int offset_C, int ldc)
 {
     cl_int clErr;
-
+    clock_t time;
+    time=clock();
     clErr = CLBlastSgemm(CLBlastLayoutRowMajor,
         (TB ? CLBlastTransposeYes : CLBlastTransposeNo),
         (TA ? CLBlastTransposeYes : CLBlastTransposeNo),
@@ -220,7 +221,8 @@ void gemm_ongpu(int TA, int TB, int M, int N, int K, float ALPHA,
         BETA,
         C_gpu, offset_C, ldc,
         &opencl_queue, NULL);
-
+	opencl_wait();
+	printf("gemm %d %d %d %f %d %d\n", M, N, K, sec(clock()-time), TB, TA);
     if (clErr != CL_SUCCESS)
     {
         printf("gemm_ongpu: clblasSgemm failed. Errorcode: %d\n", clErr);

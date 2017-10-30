@@ -49,6 +49,7 @@ void opencl_create_kernel(cl_program *program, const char *kernalName,
     cl_kernel *kernel);
 void opencl_init(cl_context context, cl_command_queue queue, cl_device_id device);
 void opencl_deinit();
+void opencl_wait();
 void opencl_kernel(cl_kernel kernel, const dim3 globalItemSize,
     const dim3 localItemSize, const int argc, ...);
 #endif

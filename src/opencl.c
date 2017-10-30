@@ -271,6 +271,10 @@ void opencl_deinit()
 	opencl_queue = 0;
 	opencl_context = 0;
 }
+void opencl_wait()
+{
+	clFinish(opencl_queue);
+}
 
 void opencl_kernel(cl_kernel kernel, const dim3 globalItemSize,
 	const dim3 localItemSize, const int argc, ...)

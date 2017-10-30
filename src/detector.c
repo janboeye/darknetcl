@@ -670,6 +670,7 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
         //image sized2 = resize_max(im, net.w);
         //image sized = crop_image(sized2, -((net.w - sized2.w)/2), -((net.h - sized2.h)/2), net.w, net.h);
         //resize_network(&net, sized.w, sized.h);
+	printf("net.w %d net.h %d\n", net.w, net.h);
         layer l = net.layers[net.n-1];
 
     printf("test_detector: layers = %d, %d, %d\n", l.w, l.h, l.n); 
@@ -682,6 +683,11 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
         float *X = sized.data;
         time=clock();
         network_predict(net, X);
+	opencl_wait();
+        printf("%s: Predicted in %f seconds.\n", input, sec(clock()-time));
+        time=clock();
+        network_predict(net, X);
+	opencl_wait();
         printf("%s: Predicted in %f seconds.\n", input, sec(clock()-time));
         get_region_boxes(l, 1, 1, thresh, probs, boxes, 0, 0, hier_thresh);
         if (l.softmax_tree && nms) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);

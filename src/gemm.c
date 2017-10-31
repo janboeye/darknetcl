@@ -225,7 +225,7 @@ void gemm_ongpu(int TA, int TB, int M, int N, int K, float ALPHA,
         C_gpu, offset_C, ldc,
         &opencl_queue, NULL);
 	opencl_wait();
-        gettimeofday(&time, NULL);
+        gettimeofday(&time1, NULL);
 	//printf("gemm %d %d %d %f %d %d\n", M, N, K, sec(clock()-time), TB, TA);
         //printf("%s: Predicted in %f seconds.\n", input, sec(clock()-time));
         timersub(&time1, &time, &res);

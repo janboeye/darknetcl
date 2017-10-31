@@ -1,4 +1,5 @@
 #include <locale.h>
+#include <sys/time.h>
 #include "network.h"
 #include "region_layer.h"
 #include "cost_layer.h"
@@ -648,7 +649,8 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
     set_batch_network(&net, 1);
         
     srand(2222222);
-    clock_t time;
+    //clock_t time;
+    struct timeval time, time1, res;
     char buff[256];
     char *input = buff;
     int j;
@@ -681,14 +683,23 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
         for(j = 0; j < l.w*l.h*l.n; ++j) probs[j] = (float*)calloc(l.classes + 1, sizeof(float));
 
         float *X = sized.data;
-        time=clock();
+        //time=clock();
+	gettimeofday(&time, NULL);
         network_predict(net, X);
 	opencl_wait();
-        printf("%s: Predicted in %f seconds.\n", input, sec(clock()-time));
-        time=clock();
+	gettimeofday(&time1, NULL);
+        //printf("%s: Predicted in %f seconds.\n", input, sec(clock()-time));
+	timersub(&time1, &time, &res);
+        printf("%s: Predicted in %f seconds.\n", input, (float)res.tv_sec + (float)res.tv_usec/1000000);
+        //time=clock();
+	gettimeofday(&time, NULL);
         network_predict(net, X);
 	opencl_wait();
-        printf("%s: Predicted in %f seconds.\n", input, sec(clock()-time));
+        //printf("%s: Predicted in %f seconds.\n", input, sec(clock()-time));
+        gettimeofday(&time1, NULL);
+        timersub(&time1, &time, &res);
+        printf("%s: Predicted in %f seconds.\n", input, (float)res.tv_sec + (float)res.tv_usec/1000000);
+
         get_region_boxes(l, 1, 1, thresh, probs, boxes, 0, 0, hier_thresh);
         if (l.softmax_tree && nms) do_nms_obj(boxes, probs, l.w*l.h*l.n, l.classes, nms);
         else if (nms) do_nms_sort(boxes, probs, l.w*l.h*l.n, l.classes, nms);

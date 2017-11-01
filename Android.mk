@@ -139,7 +139,11 @@ LOCAL_SRC_FILES :=  \
 LOCAL_SHARED_LIBRARIES :=  \
 	libdarknetcl
 
+LOCAL_MULTILIB := 32
+
 LOCAL_MODULE := darknetcl
+
+LOCAL_MODULE_PATH_32 := $(TARGET_OUT_EXECUTABLES)/darcknetcl32
 
 LOCAL_MODULE_TAGS := eng optional tests
 

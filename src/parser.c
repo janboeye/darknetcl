@@ -1086,7 +1086,7 @@ void load_weights_upto(network *net, char *filename, int start, int cutoff)
     }
     int transpose = (major > 1000) || (minor > 1000);
     
-    printf("mj = %d, mn = %d, *(net->seen) = %d\n", major, minor, net->seen ? *(net->seen) : 0);
+    printf("mj = %d, mn = %d, *(net->seen) = %zd\n", major, minor, net->seen ? *(net->seen) : (size_t)0);
 
     int i;
     for(i = start; i < net->n && i < cutoff; ++i){

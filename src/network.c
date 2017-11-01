@@ -163,7 +163,7 @@ network make_network(int n)
     network net = {0};
     net.n = n;
     net.layers = (layer*)calloc(net.n, sizeof(layer));
-    net.seen = (int*)calloc(1, sizeof(int));
+    net.seen = (size_t*)calloc(1, sizeof(size_t));
     #ifdef GPU
     net.input_gpu = (GPU_DATA *)calloc(1, sizeof(GPU_DATA));
     net.truth_gpu = (GPU_DATA *)calloc(1, sizeof(GPU_DATA));
